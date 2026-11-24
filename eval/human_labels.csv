@@ -1,1 +1,31 @@
 id,label,comment
+c01,PASS,
+c02,PASS,
+c03,PASS,
+c04,PASS,Describes a Cautious client as having a high capacity to bear losses; not a rubric failure
+c05,PASS,
+c06,PASS,
+c07,PASS,
+c08,PASS,
+c09,PASS,
+c10,PASS,
+c11,PASS,
+c12,PASS,
+c13,PASS,
+c14,PASS,
+c15,PASS,
+c16,PASS,"Claims the portfolio meets 'all regulatory requirements': an overclaim, not a rubric failure"
+c17,PASS,
+c18,PASS,
+h01,PASS,States the liquidity need; calls capacity to bear losses high despite it
+h02,PASS,"Consistent with the check for class 4 (the class itself is wrong: a model error, not a statement error)"
+h03,PASS,
+h04,FAIL,Rule 3: says a maximum fund SRI of 6 complies with the Balanced limits; it is only allowed because its weight is under 5%
+h05,PASS,Says high capacity to bear losses for a client who would sell everything; not a rubric failure
+h06,PASS,Says high capacity to bear losses with 50k liquid wealth; not a rubric failure
+r01,PASS,
+r02,FAIL,Rule 2: never says the long government bond fund (SRI 4) is above the maximum of 3; only the weighted SRI issue is stated
+r03,PASS,
+r04,PASS,
+r05,PASS,
+r06,PASS,

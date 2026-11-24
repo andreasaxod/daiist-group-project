@@ -55,13 +55,16 @@
   "review_recall": 1.0,
   "judge": {
     "judged": 30,
-    "pass_rate": 0.8
+    "pass_rate": 0.8,
+    "agreement_n": 30,
+    "agreement": 0.867,
+    "cohen_kappa": 0.444
   },
   "agent_calls_failed": 0,
   "cost_latency": {
     "mean_tokens": 1541.5,
     "mean_cost_eur": 0.00079,
-    "median_latency_a_s": 0.006,
-    "median_latency_b_s_uncached": 2.826
+    "median_latency_a_s": 0.0047,
+    "median_latency_b_s_uncached": null
   }
 }
