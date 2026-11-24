@@ -1,8 +1,8 @@
 # Group Assignment Report
 
-- **Team** (Blackboard group name):
-- **Section**: [BBADBA 5A | BBADBA 5B | PPLEDBA 5A]
-- **App URL** (on Render): https://suitability-copilot.onrender.com
+- **Team** (Blackboard group name): Group 9
+- **Section**: BBADBA 5A 
+- **App URL** (on Render): [https://suitability-copilot.onrender.com](https://suitability-copilot.onrender.com)
 - **Final commit** (tag `final`):
 
 *At most about 3,000 words, tables excluded. Members and who did what go in CONTRIBUTIONS.md.*
