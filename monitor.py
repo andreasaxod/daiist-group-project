@@ -1,7 +1,7 @@
 """
 Monitoring: quality signals over time, drift against the reference set, alerts.
 
-The thresholds below are PLACEHOLDERS. Choose yours and justify them in
+The thresholds below are PLACEHOLDERS (TEAM DECISION). Choose yours and justify them in
 REPORT.md: how many false alarms on normal inputs you accept, and how big a
 shift has to be before it matters for your product.
 """
@@ -105,8 +105,18 @@ def quality(logs: pd.DataFrame, freq: str = "h") -> pd.DataFrame:
     })
     if "f_confidence" in df:
         signals["mean confidence"] = df["f_confidence"].resample(freq).mean()
+    if "outputs" in df:
+        signals["share not suitable"] = df["outputs"].map(_not_suitable).astype(float).resample(freq).mean()
+    if "f_in_scope" in df:
+        signals["share out of scope"] = (df["f_in_scope"] < 1).astype(float).resample(freq).mean()
     long = signals.reset_index(names="time").melt("time", var_name="signal", value_name="value")
     return long.dropna()
+
+
+def _not_suitable(outputs) -> float | None:
+    """1 if the agent found the portfolio unsuitable, 0 if suitable, None if out of scope."""
+    agent = (outputs or {}).get("suitability_agent", {}) if isinstance(outputs, dict) else {}
+    return None if "suitable" not in agent else float(not agent["suitable"])
 
 
 def summary(logs: pd.DataFrame) -> pd.DataFrame:
@@ -116,6 +126,7 @@ def summary(logs: pd.DataFrame) -> pd.DataFrame:
     rows = {
         "requests": len(logs),
         "sent to review": f"{logs['review'].mean():.0%}",
+        "not suitable": f"{logs['outputs'].map(_not_suitable).astype(float).mean():.0%}",
         "rated 👍/👎": len(rated),
         "share 👎 (of rated)": f"{(rated < 0).mean():.0%}" if len(rated) else "-",
         "median latency (s)": round(float(logs["latency_s"].median()), 2),
