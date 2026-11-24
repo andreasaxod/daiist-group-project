@@ -51,9 +51,10 @@ def psi(reference, current, bins: int = PSI_BINS) -> float:
         return float("nan")
     ref_bins, cur_bins = _bin(reference, reference, bins), _bin(current, reference, bins)
     n_bins = max(ref_bins.max(), cur_bins.max()) + 1
-    expected = np.bincount(ref_bins, minlength=n_bins) / len(reference)
-    actual = np.bincount(cur_bins, minlength=n_bins) / len(current)
-    expected, actual = np.clip(expected, 1e-4, None), np.clip(actual, 1e-4, None)
+    # Additive smoothing (half a count per bin): with small samples an empty bin is
+    # common by chance, and a near-zero floor would turn it into a huge PSI.
+    expected = (np.bincount(ref_bins, minlength=n_bins) + 0.5) / (len(reference) + 0.5 * n_bins)
+    actual = (np.bincount(cur_bins, minlength=n_bins) + 0.5) / (len(current) + 0.5 * n_bins)
     return float(np.sum((actual - expected) * np.log(actual / expected)))
 
 

@@ -1,17 +1,18 @@
-fund_id,name,asset_class,sri,ongoing_charges_pct,source
-MM-EUR,Euro Money Market Fund (illustrative),money_market,1,0.15,ILLUSTRATIVE - replace with a real fund and its KID link
-GOV-ST,Euro Short-Term Government Bonds (illustrative),bonds,2,0.25,ILLUSTRATIVE - replace with a real fund and its KID link
-IG-CORP,Euro Investment-Grade Corporate Bonds (illustrative),bonds,2,0.40,ILLUSTRATIVE - replace with a real fund and its KID link
-GOV-LT,Euro Long-Term Government Bonds (illustrative),bonds,3,0.30,ILLUSTRATIVE - replace with a real fund and its KID link
-HY-CORP,Global High-Yield Bonds (illustrative),bonds,3,0.75,ILLUSTRATIVE - replace with a real fund and its KID link
-FLEX-CONS,Conservative Flexible Allocation (illustrative),multi_asset,3,1.10,ILLUSTRATIVE - replace with a real fund and its KID link
-FLEX-BAL,Balanced Flexible Allocation (illustrative),multi_asset,4,1.30,ILLUSTRATIVE - replace with a real fund and its KID link
-CONV-EUR,European Convertible Bonds (illustrative),convertibles,3,0.90,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-EUR-DIV,European Dividend Equities (illustrative),equity,4,1.50,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-WORLD,Global Developed Equities Index (illustrative),equity,4,0.20,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-EUR-SMID,European Small & Mid Caps (illustrative),equity,5,1.80,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-EM,Emerging Markets Equities (illustrative),equity,5,1.60,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-TECH,Global Technology Equities (illustrative),equity,5,1.70,ILLUSTRATIVE - replace with a real fund and its KID link
-COMMOD,Broad Commodities (illustrative),commodities,5,0.90,ILLUSTRATIVE - replace with a real fund and its KID link
-EQ-LEV,Leveraged Equity Strategy (illustrative),equity,6,2.10,ILLUSTRATIVE - replace with a real fund and its KID link
-CRYPTO,Digital Assets Basket (illustrative),crypto,7,2.50,ILLUSTRATIVE - replace with a real fund and its KID link
+fund_id,name,isin,asset_class,sri,ongoing_charges_pct,kid_date,source
+XEON,Xtrackers II EUR Overnight Rate Swap UCITS ETF 1C,LU0290358497,money_market,1,0.10,2026-02-16,https://assets.finanzfluss.de/hippoverse/documents/LU0290358497-kiid.pdf
+CARM-SECU,Carmignac Sécurité AW EUR Acc,FR0010149120,bonds_short_term,2,1.11,2026-04-16,https://assets.finanzfluss.de/hippoverse/documents/FR0010149120-kiid.pdf
+EUR-GOV-1-3,iShares € Govt Bond 1-3yr UCITS ETF EUR Dist,IE00B14X4Q57,bonds_government,2,0.10,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00B14X4Q57-kiid.pdf
+EUR-HY,iShares € High Yield Corp Bond UCITS ETF EUR Dist,IE00B66F4759,bonds_high_yield,2,0.50,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00B66F4759-kiid.pdf
+DNCA-EUROSE,DNCA Invest Eurose A EUR,LU0284394235,multi_asset_conservative,2,1.49,2026-04-16,https://assets.finanzfluss.de/hippoverse/documents/LU0284394235-kiid.pdf
+CARM-PATRI,Carmignac Patrimoine A EUR Acc,FR0010135103,multi_asset,3,1.80,2026-04-16,https://assets.finanzfluss.de/hippoverse/documents/FR0010135103-kiid.pdf
+PLUV-CREDIT-31,Pluvalca Credit Opportunities 2031 A,FR001400TS68,bonds_target_maturity,3,1.30,2025-12-31,https://www.francetransactions.com/IMG/pdf/pluvalca-credit-opportunities-2031-a_focus.pdf (factsheet; charges = management + max admin fee)
+MSCI-WORLD,iShares Core MSCI World UCITS ETF USD Acc,IE00B4L5Y983,equity_global,4,0.20,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00B4L5Y983-kiid.pdf
+MSCI-EM,iShares Core MSCI EM IMI UCITS ETF USD Acc,IE00BKM4GZ66,equity_emerging,4,0.18,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00BKM4GZ66-kiid.pdf
+EUR-GOV-15-30,iShares € Govt Bond 15-30yr UCITS ETF EUR Dist,IE00B1FZS913,bonds_government_long,4,0.15,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00B1FZS913-kiid.pdf
+MA-BBM,Montpensier Arbevel Best Business Models SRI RC,FR0013079761,equity_euro,4,1.56,2025-12-31,https://assets.finanzfluss.de/hippoverse/documents/FR0013079761-kiid.pdf
+PLUV-PME,Pluvalca Initiatives PME A,FR0011315696,equity_small_caps,4,2.23,2025-12-31,https://assets.finanzfluss.de/hippoverse/documents/FR0011315696-kiid.pdf
+COMMOD,iShares Diversified Commodity Swap UCITS ETF USD Acc,IE00BDFL4P12,commodities,4,0.19,2026-06-16,https://assets.finanzfluss.de/hippoverse/documents/IE00BDFL4P12-kiid.pdf
+SP500-TECH,iShares S&P 500 Information Technology Sector UCITS ETF USD Acc,IE00B3WJKG14,equity_sector,5,0.15,2026-09-03,https://assets.finanzfluss.de/hippoverse/documents/IE00B3WJKG14-kiid.pdf
+NDX-2X,Amundi Nasdaq-100 Daily (2x) Leveraged UCITS ETF Acc,FR0010342592,equity_leveraged,6,0.60,2026-06-12,https://assets.finanzfluss.de/hippoverse/documents/FR0010342592-kiid.pdf
+GOLD-MINERS,VanEck Gold Miners UCITS ETF,IE00BQQP9F84,equity_sector,6,0.53,2026-03-27,https://assets.finanzfluss.de/hippoverse/documents/IE00BQQP9F84-kiid.pdf
+BTC-ETP,CoinShares Physical Bitcoin ETP,GB00BLD4ZL17,crypto,6,0.15,2026-10-01,https://assets.finanzfluss.de/hippoverse/documents/GB00BLD4ZL17-kiid.pdf

@@ -8,8 +8,8 @@ Every `input` is one request as JSON, the same thing the App tab's **Build reque
 {"age": 47, "horizon_years": 12, "annual_income_k": 160, "liquid_wealth_k": 1200, "experience": 2,
  "loss_reaction": "hold", "objective": "growth", "max_drawdown_ok_pct": 25, "needs_liquidity_2y": false,
  "dependents": 2,
- "portfolio": [{"fund_id": "EQ-WORLD", "weight_pct": 50}, {"fund_id": "IG-CORP", "weight_pct": 30},
-               {"fund_id": "EQ-TECH", "weight_pct": 20}]}
+ "portfolio": [{"fund_id": "MSCI-WORLD", "weight_pct": 50}, {"fund_id": "CARM-SECU", "weight_pct": 30},
+               {"fund_id": "SP500-TECH", "weight_pct": 20}]}
 ```
 
 | Field | Values |

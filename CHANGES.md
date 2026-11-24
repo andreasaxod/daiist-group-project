@@ -35,11 +35,9 @@ Delete this file before you tag `final` (or keep it as a record of the starting 
 
 Unchanged: `check.py`, `env.py`, `main.py`, `logbook.py`, `SETUP.md`, `README.md`, `CONTRIBUTIONS.md`, `.github/`.
 
-## Still to do (the team's part)
-1. **Label the 150 clients**: fill `advisor_label` (1-5) in `data/clients_to_label.csv`, then `uv run python train.py` and `uv run python main.py reference`.
-2. **Replace the illustrative funds** in `data/funds.csv` with real ones from their KIDs (keep the ids, or change them in your cases too).
-3. **Write `eval/cases.csv`**: 30+ cases (see `eval/README.md`).
-4. Run `uv run python main.py evaluate` with your Gemini key, then **label 20+ statements** in `eval/human_labels.csv` and run it again.
-5. **Confirm or change the TEAM DECISION values**: suitability limits (`suitability.py`), the grid, `REVIEW_BELOW_CONFIDENCE` (`pipeline.py`), the alert thresholds (`monitor.py`). Check the Gemini price constants in `pipeline.py`.
-6. Fork, push, deploy on Render (SETUP.md), run `uv run python check.py`, fill REPORT.md and CONTRIBUTIONS.md.
-7. Optional: the RL bonus (a bandit over statement styles, learning from 👍/👎).
+## Still to do
+1. Review the labels (`data/clients_to_label.csv`) and the test cases (`eval/cases.csv`), and say who reviewed them in REPORT.md.
+2. Run `uv run python main.py evaluate` with your Gemini key, then label 20+ statements yourselves in `eval/human_labels.csv` and run it again.
+3. Confirm or change the TEAM DECISION values (suitability limits, grid, review threshold, alert thresholds) and check the Gemini price constants in `pipeline.py`.
+4. Fill REPORT.md's analysis sections and CONTRIBUTIONS.md, run `uv run python check.py`, tag `final`.
+5. Optional: the RL bonus (a bandit over statement styles, learning from 👍/👎).

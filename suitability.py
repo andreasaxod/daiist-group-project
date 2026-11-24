@@ -175,7 +175,7 @@ def lookup_fund(fund_id: str) -> dict:
     fund = FUNDS.get(str(fund_id).strip().upper())
     if fund is None:
         return {"fund_id": fund_id, "found": False}
-    return {"found": True} | {k: fund[k] for k in ("fund_id", "name", "asset_class", "sri", "ongoing_charges_pct")}
+    return {"found": True} | {k: fund[k] for k in ("fund_id", "name", "isin", "asset_class", "sri", "ongoing_charges_pct")}
 
 
 def check_suitability(risk_class: int, portfolio: list[dict]) -> dict:

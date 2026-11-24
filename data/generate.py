@@ -98,7 +98,8 @@ def make_portfolio(target_class: int, rng) -> list[dict]:
         by_sri.setdefault(fund["sri"], []).append(fund_id)
     max_sri = {1: 2, 2: 3, 3: 4, 4: 5, 5: 7}[min(aim, 5)] + (1 if aim > 5 else 0)
     pool = [f for sri, funds in by_sri.items() if sri <= max_sri for f in funds]
-    risky = [f for sri, funds in by_sri.items() if max_sri - 1 <= sri <= max_sri for f in funds]
+    top = max(sri for sri in by_sri if sri <= max_sri)  # the riskiest level that exists (no fund is SRI 7)
+    risky = [f for sri, funds in by_sri.items() if top - 1 <= sri <= top for f in funds]
     n = int(rng.integers(2, 5))
     chosen = list(dict.fromkeys([str(rng.choice(risky))] + [str(f) for f in rng.choice(pool, n - 1)]))
     raw = rng.dirichlet(np.ones(len(chosen))) * 100
