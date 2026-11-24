@@ -116,7 +116,7 @@ def judge(case: dict, result: dict) -> dict:
     from google import genai
     from google.genai import types
 
-    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(api_version="v1beta"))
     response = client.models.generate_content(
         model=pipeline.GEMINI_MODEL, contents=payload,
         config=types.GenerateContentConfig(system_instruction=JUDGE_PROMPT, temperature=0,
