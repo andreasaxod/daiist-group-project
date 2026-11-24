@@ -117,11 +117,14 @@ def judge(case: dict, result: dict) -> dict:
     from google.genai import types
 
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"], http_options=types.HttpOptions(api_version="v1beta"))
-    response = client.models.generate_content(
-        model=pipeline.GEMINI_MODEL, contents=payload,
-        config=types.GenerateContentConfig(system_instruction=JUDGE_PROMPT, temperature=0,
-                                           response_mime_type="application/json"),
-    )
+    try:
+        response = pipeline.generate_with_retry(
+            client, model=pipeline.GEMINI_MODEL, contents=payload,
+            config=types.GenerateContentConfig(system_instruction=JUDGE_PROMPT, temperature=0,
+                                               response_mime_type="application/json"),
+        )
+    except Exception as error:  # noqa: BLE001 - not cached: the next run tries again
+        return {"verdict": None, "reason": f"judge call failed, run again: {type(error).__name__} {str(error)[:80]}"}
     try:
         verdict = json.loads(response.text)
     except (json.JSONDecodeError, TypeError):
@@ -141,6 +144,7 @@ def cohen_kappa(a: list[str], b: list[str]) -> float:
 
 def main() -> None:
     env.load_env()
+    pipeline.RETRY_WAITS_S = (5, 15, 30, 60)  # be patient with Gemini's free tier here
     with CASES.open(newline="", encoding="utf-8") as f:
         cases = [r for r in csv.DictReader(f) if (r.get("input") or "").strip()]
     if not cases:
@@ -221,7 +225,11 @@ def main() -> None:
             human, machine = both["label"].str.upper().str.strip().tolist(), both["judge"].str.upper().tolist()
             summary["judge"] |= {"agreement_n": len(both), "agreement": round(float(np.mean(np.array(human) == np.array(machine))), 3),
                                  "cohen_kappa": cohen_kappa(human, machine)}
+    offline = int((results["outputs"].map(lambda o: json.loads(o).get("suitability_agent", {}).get("llm")) == "offline-template").sum())
+    summary["agent_calls_failed"] = offline
     print(f"LLM judge: {summary['judge']}")
+    if offline:
+        print(f"WARNING: {offline} statements are templates because the Gemini call failed. Run the evaluation again.")
 
     # Cost and latency. Cached agent calls report the cost and tokens of the original call.
     live = results[~results["agent_cached"].fillna(False).astype(bool)]
