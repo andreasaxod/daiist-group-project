@@ -1,0 +1,17 @@
+fund_id,name,asset_class,sri,ongoing_charges_pct,source
+MM-EUR,Euro Money Market Fund (illustrative),money_market,1,0.15,ILLUSTRATIVE - replace with a real fund and its KID link
+GOV-ST,Euro Short-Term Government Bonds (illustrative),bonds,2,0.25,ILLUSTRATIVE - replace with a real fund and its KID link
+IG-CORP,Euro Investment-Grade Corporate Bonds (illustrative),bonds,2,0.40,ILLUSTRATIVE - replace with a real fund and its KID link
+GOV-LT,Euro Long-Term Government Bonds (illustrative),bonds,3,0.30,ILLUSTRATIVE - replace with a real fund and its KID link
+HY-CORP,Global High-Yield Bonds (illustrative),bonds,3,0.75,ILLUSTRATIVE - replace with a real fund and its KID link
+FLEX-CONS,Conservative Flexible Allocation (illustrative),multi_asset,3,1.10,ILLUSTRATIVE - replace with a real fund and its KID link
+FLEX-BAL,Balanced Flexible Allocation (illustrative),multi_asset,4,1.30,ILLUSTRATIVE - replace with a real fund and its KID link
+CONV-EUR,European Convertible Bonds (illustrative),convertibles,3,0.90,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-EUR-DIV,European Dividend Equities (illustrative),equity,4,1.50,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-WORLD,Global Developed Equities Index (illustrative),equity,4,0.20,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-EUR-SMID,European Small & Mid Caps (illustrative),equity,5,1.80,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-EM,Emerging Markets Equities (illustrative),equity,5,1.60,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-TECH,Global Technology Equities (illustrative),equity,5,1.70,ILLUSTRATIVE - replace with a real fund and its KID link
+COMMOD,Broad Commodities (illustrative),commodities,5,0.90,ILLUSTRATIVE - replace with a real fund and its KID link
+EQ-LEV,Leveraged Equity Strategy (illustrative),equity,6,2.10,ILLUSTRATIVE - replace with a real fund and its KID link
+CRYPTO,Digital Assets Basket (illustrative),crypto,7,2.50,ILLUSTRATIVE - replace with a real fund and its KID link
