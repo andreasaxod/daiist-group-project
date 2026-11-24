@@ -31,12 +31,13 @@ MODEL_FILE = ROOT / "models" / "risk_model.joblib"
 CACHE_DIR = ROOT / "cache" / "agent"
 
 PROMPT_VERSION = "statement-v1"
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL") or "gemini-3.5-flash-lite"
 
 # TEAM DECISION: below this confidence, the risk class is too uncertain to rely on.
 REVIEW_BELOW_CONFIDENCE = 0.6
 
-# TODO: check the current Gemini price for the model you use (USD per million tokens)
+# Gemini 3.5 Flash-Lite list price (ai.google.dev, checked Nov 2026), USD per million tokens.
+# TODO: check the current Gemini price for the model you use
 # and the exchange rate, and cite them in REPORT.md. The free tier costs nothing,
 # but report what the product would cost on the paid tier.
 USD_PER_M_INPUT, USD_PER_M_OUTPUT, EUR_PER_USD = 0.30, 2.50, 0.86
