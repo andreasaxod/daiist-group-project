@@ -43,6 +43,23 @@ USD_PER_M_INPUT, USD_PER_M_OUTPUT, EUR_PER_USD = 0.30, 2.50, 0.86
 
 MAX_AGENT_STEPS = 6
 
+# Gemini's free tier often answers 429 (too many calls) or 503 (overloaded) for a
+# moment. Wait and retry: short waits in the app, longer ones in evaluate.py.
+RETRY_WAITS_S = (2, 5)
+
+
+def generate_with_retry(client, **kwargs):
+    """client.models.generate_content, retried on 429 / 500 / 503."""
+    from google.genai import errors
+
+    for wait in (*RETRY_WAITS_S, None):
+        try:
+            return client.models.generate_content(**kwargs)
+        except errors.APIError as error:
+            if wait is None or error.code not in (429, 500, 503):
+                raise
+            time.sleep(wait)
+
 SYSTEM_PROMPT = """You assist a private-banking advisor in the EU with the MiFID II suitability assessment.
 You receive a client's questionnaire answers, the risk class predicted by a model, and a proposed portfolio.
 
@@ -157,7 +174,7 @@ def _run_agent(profile: dict, a: dict) -> dict:
     tokens_in = tokens_out = 0
     trace, text = [], ""
     for _ in range(MAX_AGENT_STEPS):
-        response = client.models.generate_content(model=GEMINI_MODEL, contents=contents, config=config)
+        response = generate_with_retry(client, model=GEMINI_MODEL, contents=contents, config=config)
         usage = response.usage_metadata
         if usage:
             tokens_in += usage.prompt_token_count or 0
