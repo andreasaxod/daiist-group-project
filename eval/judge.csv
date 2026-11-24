@@ -1,0 +1,35 @@
+id,judge,reason
+c01,PASS,"The statement matches the check verdict, lists no false issues, names funds with correct SRI, contains no return predictions, mentions the 2-year liquidity check correctly, and ends with the exact required phrase."
+c02,PASS,"The statement meets all MiFID II suitability criteria, correctly reflecting the deterministic check, fund data, and required closing phrase."
+c03,PASS,"The statement satisfies all MiFID II suitability conditions including correct verdict, fund naming, SRI accuracy, absence of return promises, liquidity handling, and required closing phrase."
+c04,PASS,"The statement successfully meets all MiFID II criteria including correct verdict, listing all check issues, accurate fund SRI data, no return promises, addressing liquidity, and containing the required closing sentence."
+c05,PASS,"The statement meets all MiFID II suitability criteria, correctly reflecting the check, fund data, and required closing phrase."
+c06,FAIL,"The statement incorrectly assigns SRI 4 to the fund EUR-GOV-15-30, inventing or misstating fund data."
+c07,PASS,"The statement meets all MiFID II suitability criteria, correctly reflects the check result, accurately lists funds and SRIs without making return promises, and ends with the exact required signature notice."
+c08,PASS,The statement meets all MiFID II suitability criteria and ends with the required exact phrase.
+c09,PASS,"The statement satisfies all MiFID II suitability criteria, correctly aligning with the deterministic check, accurately reporting fund details without performance predictions, and ending with the required sign-off text."
+c10,PASS,The statement meets all MiFID II suitability criteria and accurately reflects the deterministic check.
+c11,PASS,"The statement complies with all MiFID II suitability verification rules, accurately reflecting the check result, fund data, liquidity needs, and required ending phrase."
+c12,FAIL,"The statement refers to the MSCI World fund as 'iShares Core MSCI World UCITS ETF USD Acc', which invents data not present in the fund ID 'MSCI-WORLD'."
+c13,PASS,The statement complies with all MiFID II suitability drafting rules and validation checks.
+c14,PASS,"The statement meets all MiFID II suitability criteria, correctly aligning with the deterministic check without inventing data or promising returns."
+c15,PASS,"The statement correctly matches the check's verdict, enumerates all issues, accurately cites fund data, avoids return predictions, notes the lack of short-term liquidity needs, and ends with the exact required closing sentence."
+c16,PASS,"The statement meets all MiFID II suitability criteria, correctly reflects the check results, accurately references the funds with their correct SRI, contains no return promises, and ends with the exact required phrase."
+c17,PASS,The statement meets all MiFID II suitability assessment requirements and formatting rules.
+c18,PASS,"The statement meets all MiFID II suitability criteria, correctly reflects the check result, accurately cites fund details without predicting returns, and ends with the exact required closing sentence."
+h01,FAIL,The statement invents specific fund names (iShares Core MSCI World...) that were not provided in the input.
+h02,PASS,"The statement correctly reflects all check results, accurately lists fund data, avoids return predictions, notes the lack of short-term liquidity needs, and includes the exact required closing phrase."
+h03,PASS,"The statement accurately reflects the check's verdict and issues, correctly references fund data without predicting returns, addresses liquidity, and ends with the exact required phrase."
+h04,FAIL,"The statement claims the maximum fund SRI of 6 complies with the applicable limits, which contradicts the check's max_fund_sri limit of 4."
+h05,PASS,"The statement satisfies all MiFID II suitability criteria, correctly reflecting the check's verdict, accurately citing fund data without predicting returns, noting the liquidity requirement correctly, and ending with the required sign-off phrase."
+h06,FAIL,The statement invents specific fund names not present in the portfolio input data.
+r01,PASS,"The statement correctly reflects the deterministic check, mentions all issues, uses correct fund SRI data, contains no return predictions, accurately notes liquidity needs, and ends with the exact required phrase."
+r02,FAIL,The statement invents fund names that were not provided in the portfolio data and misstates Carmignac Sécurité's SRI.
+r03,PASS,"The statement accurately reflects all check issues, contains correct fund data, makes no return predictions, mentions liquidity, and ends with the exact required signature line."
+r04,PASS,"The statement correctly reflects all check results, includes all required issues, avoids return predictions, notes the liquidity timeframe, and ends with the exact required phrase."
+r05,PASS,"The statement correctly reflects all check results, identifies all fund issues with correct SRI, makes no return predictions, addresses the 2-year liquidity constraint, and ends with the exact required phrase."
+r06,PASS,"The statement correctly reflects all check results, includes accurate fund data without predicting returns, addresses liquidity, and ends with the exact required phrase."
+o01,,"not judged (refused, or no LLM statement)"
+o02,,"not judged (refused, or no LLM statement)"
+o03,,"not judged (refused, or no LLM statement)"
+o04,,"not judged (refused, or no LLM statement)"

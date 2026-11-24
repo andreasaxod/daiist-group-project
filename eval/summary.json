@@ -1,0 +1,67 @@
+{
+  "component_a_held_out": {
+    "n": 30,
+    "model": {
+      "accuracy": 0.7,
+      "macro_f1": 0.649,
+      "within_one_class": 0.967,
+      "too_risky_share": 0.133,
+      "expected_calibration_error": 0.178
+    },
+    "grid_baseline": {
+      "accuracy": 0.467,
+      "macro_f1": 0.455,
+      "within_one_class": 0.8,
+      "too_risky_share": 0.5
+    },
+    "label_source": "advisor"
+  },
+  "end_to_end": {
+    "product": {
+      "n": 34,
+      "mean": 0.765,
+      "ci95": [
+        0.618,
+        0.882
+      ]
+    },
+    "baseline": {
+      "n": 34,
+      "mean": 0.588,
+      "ci95": [
+        0.412,
+        0.735
+      ]
+    }
+  },
+  "risk_class_on_cases": {
+    "model": {
+      "n": 30,
+      "mean": 0.733,
+      "ci95": [
+        0.567,
+        0.867
+      ]
+    },
+    "grid": {
+      "n": 30,
+      "mean": 0.533,
+      "ci95": [
+        0.367,
+        0.7
+      ]
+    }
+  },
+  "review_recall": 1.0,
+  "judge": {
+    "judged": 30,
+    "pass_rate": 0.8
+  },
+  "agent_calls_failed": 0,
+  "cost_latency": {
+    "mean_tokens": 1541.5,
+    "mean_cost_eur": 0.00079,
+    "median_latency_a_s": 0.006,
+    "median_latency_b_s_uncached": 2.826
+  }
+}
