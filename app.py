@@ -17,6 +17,7 @@ import time
 
 import gradio as gr
 
+import bandit
 import env
 import logbook
 import monitor
@@ -46,7 +47,9 @@ EXAMPLE = {
 def serve(raw_input: str) -> dict:
     """Run one request through the pipeline, log it, and return the logged record."""
     started = time.perf_counter()
-    result = pipeline.run(raw_input)
+    pick = bandit.choose()  # bonus: the bandit picks the statement style from the 👍/👎 in the logs
+    result = pipeline.run(raw_input, style=pick["style"])
+    result["outputs"]["bandit"] = pick
     return logbook.log_request(result | {"latency_s": round(time.perf_counter() - started, 3)})
 
 
@@ -76,6 +79,7 @@ def on_run(raw_input):
         return a, b["statement"], "⛔ **Out of scope.** " + a["reason"], record["id"]
     verdict = "✅ **Suitable**" if b["suitable"] else "❌ **Not suitable**: " + " ".join(b["issues"])
     status = "⚠️ **Sent to the advisor for review.**" if record["review"] else "✅ No review flag (the advisor still signs)."
+    status += f"  Statement style: **{b.get('style', 'standard')}** (picked by the bandit; rate it with 👍/👎)."
     if b.get("error"):
         status += f"  LLM unavailable ({b['error']}): template statement."
     profile = f"Risk class **{a['risk_class']} ({a['profile_name']})**, confidence {a['confidence']:.0%} · points grid says {a['grid_baseline_class']}"
@@ -92,7 +96,8 @@ def on_feedback(request_id, value):
         gr.Warning("Run a request first.")
         return
     logbook.log_feedback(request_id, value)
-    gr.Info("Thanks for the feedback.")
+    bandit.forget_cache()  # the next request's choice of style uses this feedback
+    gr.Info("Thanks for the feedback: the bandit will use it for the next request.")
 
 
 # --- Monitoring tab ----------------------------------------------------------
@@ -111,7 +116,7 @@ def on_refresh():
         drift_table = monitor.drift(reference, monitor.live_features(logs))
     else:
         drift_table = monitor.drift(reference, reference.head(0)) if reference is not None else None
-    return alert_text, monitor.summary(logs), monitor.quality(logs), drift_table
+    return alert_text, monitor.summary(logs), monitor.quality(logs), drift_table, bandit.table(logs)
 
 
 with gr.Blocks(title=TITLE) as demo:
@@ -165,8 +170,14 @@ with gr.Blocks(title=TITLE) as demo:
         summary_table = gr.Dataframe(label="Summary", interactive=False)
         quality_plot = gr.LinePlot(x="time", y="value", color="signal", label="Quality over time", height=300)
         drift_table = gr.Dataframe(label=f"Drift: PSI of the last {monitor.WINDOW} requests against the reference set", interactive=False)
+        gr.Markdown(
+            "### Bonus: the statement-style bandit\n"
+            "Thompson sampling over three statement styles, learning from the 👍/👎 in the logs. "
+            "The simulated warm-up counts at half weight; the real column is this app's own feedback."
+        )
+        bandit_table = gr.Dataframe(label="Bandit: what it has learned and how often it picks each style now", interactive=False)
         gr.Markdown(f"<small>{LOG_TARGET}</small>")
-        outputs = [alert_box, summary_table, quality_plot, drift_table]
+        outputs = [alert_box, summary_table, quality_plot, drift_table, bandit_table]
         refresh.click(on_refresh, None, outputs, api_name=False)
         demo.load(on_refresh, None, outputs, api_name=False)
 

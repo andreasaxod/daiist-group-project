@@ -1,0 +1,26 @@
+{
+  "simulated": true,
+  "note": "Warm-up from a simulator, not from real advisors. Counted at weight PRIOR_WEIGHT in bandit.py.",
+  "assumed_up_rate": {
+    "standard": 0.6,
+    "concise": 0.7,
+    "regulatory": 0.5
+  },
+  "feedback_rate": 0.6,
+  "n_requests": 60,
+  "seed": 42,
+  "counts": {
+    "standard": {
+      "up": 4,
+      "down": 6
+    },
+    "concise": {
+      "up": 7,
+      "down": 4
+    },
+    "regulatory": {
+      "up": 14,
+      "down": 5
+    }
+  }
+}

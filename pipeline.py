@@ -24,6 +24,7 @@ import joblib
 import pandas as pd
 
 import suitability
+from bandit import STYLES
 from suitability import OutOfScope
 
 ROOT = Path(__file__).resolve().parent
@@ -133,8 +134,12 @@ def _tool_declarations():
     ])]
 
 
-def _cache_key(profile: dict, a: dict) -> str:
-    payload = json.dumps([GEMINI_MODEL, PROMPT_VERSION, profile, a["risk_class"]], sort_keys=True)
+def _prompt_version(style: str) -> str:
+    return PROMPT_VERSION if style == "standard" else f"{PROMPT_VERSION}-{style}"
+
+
+def _cache_key(profile: dict, a: dict, style: str = "standard") -> str:
+    payload = json.dumps([GEMINI_MODEL, _prompt_version(style), profile, a["risk_class"]], sort_keys=True)
     return hashlib.sha256(payload.encode()).hexdigest()[:24]
 
 
@@ -149,7 +154,7 @@ def _offline_statement(profile: dict, check: dict, reason: str) -> str:
     ).replace("  ", " ")
 
 
-def _run_agent(profile: dict, a: dict) -> dict:
+def _run_agent(profile: dict, a: dict, style: str = "standard") -> dict:
     from google import genai
     from google.genai import types
 
@@ -159,7 +164,7 @@ def _run_agent(profile: dict, a: dict) -> dict:
         "check_suitability": lambda args: suitability.check_suitability(args.get("risk_class", a["risk_class"]), profile["portfolio"]),
     }
     config = types.GenerateContentConfig(
-        system_instruction=SYSTEM_PROMPT,
+        system_instruction=SYSTEM_PROMPT + ("\n\n" + STYLES[style] if STYLES[style] else ""),
         tools=_tool_declarations(),
         temperature=0.2,
         automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
@@ -196,19 +201,20 @@ def _run_agent(profile: dict, a: dict) -> dict:
     return {"statement": text, "tool_calls": trace, "tokens": tokens_in + tokens_out, "cost_eur": round(cost, 6)}
 
 
-def component_b(profile: dict, a: dict) -> dict:
-    """Suitability verdict (deterministic) and the statement drafted by the agent."""
+def component_b(profile: dict, a: dict, style: str = "standard") -> dict:
+    """Suitability verdict (deterministic) and the statement drafted by the agent, in the given style."""
     started = time.perf_counter()
     check = suitability.check_suitability(a["risk_class"], profile["portfolio"])
     out = {
         "suitable": check["suitable"],
         "issues": check["issues"],
         "weighted_sri": check["weighted_sri"],
-        "llm": f"{GEMINI_MODEL}/{PROMPT_VERSION}",
+        "llm": f"{GEMINI_MODEL}/{_prompt_version(style)}",
+        "style": style,
         "cached": False,
         "error": None,
     }
-    cache_file = CACHE_DIR / f"{_cache_key(profile, a)}.json"
+    cache_file = CACHE_DIR / f"{_cache_key(profile, a, style)}.json"
     if cache_file.is_file():
         agent = json.loads(cache_file.read_text(encoding="utf-8"))
         out["cached"] = True
@@ -217,7 +223,7 @@ def component_b(profile: dict, a: dict) -> dict:
         out["llm"], out["error"] = "offline-template", "GEMINI_API_KEY is not set"
     else:
         try:
-            agent = _run_agent(profile, a)
+            agent = _run_agent(profile, a, style)
             if not agent["statement"]:
                 raise RuntimeError("the agent returned no statement")
             CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -255,7 +261,10 @@ def summary(profile: dict) -> str:
             f"liquidity need {profile['needs_liquidity_2y']} | {funds}")[:200]
 
 
-def run(raw_input: str) -> dict:
+def run(raw_input: str, style: str = "standard") -> dict:
+    """One request. `style` is the statement style; the app's bandit picks it, everything else uses standard."""
+    if style not in STYLES:
+        style = "standard"
     try:
         profile = suitability.parse(raw_input)
     except OutOfScope as reason:
@@ -272,7 +281,7 @@ def run(raw_input: str) -> dict:
             "cost_eur": 0.0,
         }
     a = component_a(profile)
-    b = component_b(profile, a)
+    b = component_b(profile, a, style)
     review = (
         a["confidence"] < REVIEW_BELOW_CONFIDENCE
         or not b["suitable"]
